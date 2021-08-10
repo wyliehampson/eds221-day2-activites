@@ -9,22 +9,65 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Create a vector
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+vec_1 <- c(2, 5, 9, 10, 8, 12, 1, 0)
+vec_1
+class(vec_1)
+typeof(vec_1)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# get the third element
+vec_1_e3 <- vec_1[3]
+vec_1_e3
 
-```{r cars}
-summary(cars)
+# get the first element
+vec_1_e1 <- vec_1[1]
+vec_1_e1
+
+# get elements 5 to 7
+vec_1_e5to7 <- vec_1[5:7]
+vec_1_e5to7
+
+vec_1_char <- as.character(vec_1)
+vec_1_char
 ```
 
-## Including Plots
+```{r}
+vec_2 <- c(town = "Santa Barbara", location = "Rincon", swell = "south")
+vec_2
+class(vec_2)
 
-You can also embed plots, for example:
+typeof(vec_2)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+vec_2[2]
+
+vec_2["location"]
+
+# What is the length of vec_2?
+length(vec_2)
+
+vec_2_e2 <- vec_2[2]
+vec_2_e2
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Create a dateframe
+
+```{r}
+df_1 <- data.frame(region = c("A", "B", "A", "D"),
+                   species = c("otter", "great white", "sea lion", "gray whale"),
+                   count = c(12, 2, 36, 6))
+df_1
+
+# Return the class of df_1
+class(df_1)
+
+# Return the class of just the species column
+class(df_1$species)
+
+# Find the maximum value of the count() column
+max_count <- max(df_1$count)
+max_count
+```
+
