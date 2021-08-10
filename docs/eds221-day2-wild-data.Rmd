@@ -1,0 +1,103 @@
+---
+title: "Salamander and Cutthroat Trout Data"
+author: "Wylie Hampson"
+date: "8/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+## Read and store the data file into a dataframe
+
+```{r}
+mack_verts <- read_csv(here::here("data", "AS00601.csv"))
+
+```
+
+## Clean the names of the dataframe
+
+```{r}
+mack_verts <- mack_verts %>% clean_names()
+```
+
+## Accessing things in the dataframe
+
+```{r}
+# The fifth value in column "weight"
+mc_wt_5 <- mack_verts$weight[5]
+mc_wt_5
+
+# The 8th - 20th values in column "length1"
+mc_length_8_20 <- mack_verts$length1[8:20]
+mc_length_8_20
+
+# Everything in column "sampledate" as a vector
+mc_dates <- mack_verts$sampledate
+
+```
+
+## Create a salamander subset
+
+```{r}
+mc_salamaders <- mack_verts %>% 
+  filter(species == "DITE")
+```
+
+## Create a scatterplot of salamander length1 vs weight
+
+```{r}
+salamander_size_plot <- ggplot(data = mc_salamaders, aes(x = length1, y = weight)) +
+  geom_point(color = "red",
+             alpha = 0.5,
+             size = 3) +
+  theme_dark() +
+  labs(x = "Length (mm)",
+       y = "Weight (g)",
+       title = "Salamander Weight vs. Length")
+
+salamander_size_plot
+```
+
+## Save the figure to figs folder
+
+```{r}
+ggsave(here::here("figs", "salamander_size.png"), plot = salamander_size_plot)
+```
+
+## Make a subset for the trout
+
+```{r}
+mc_trout <- mack_verts %>% filter(species == "ONCL") 
+```
+
+## Make a scatterplot for the trout length1 vs. weight
+
+```{r}
+cutthroat_size_plot <- ggplot(data = mc_trout, aes(x = length1, y = weight)) +
+  geom_point(aes(color = reach)) +
+  scale_color_manual(values = c("red", "purple", "green")) +
+  facet_wrap(~reach) +
+  labs(x = "Length (mm)",
+       y = "Weight (g)",
+       title = "Cuttroat Trout Length vs. Weight")
+
+cutthroat_size_plot
+```
+
+## Export cutthroat trout plot to the figs folder
+
+```{r}
+ggsave(here::here("figs", "cutthroat_size.png"), plot = cutthroat_size_plot)
+```
+
+
+
+
+
+
+
